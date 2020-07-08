@@ -36,5 +36,33 @@
             </div>
         </div>
     </header>
+    <script type="text/javascript">
+ADMITAD = window.ADMITAD || {};
+ADMITAD.Invoice = ADMITAD.Invoice || {};
+ADMITAD.Invoice.broker = 'adm';  // deduplication parameter (for Admitad by default)
+ADMITAD.Invoice.category = '1';  // action code (defined during integration)
+
+var orderedItem = [];  // temporary array for product items
+    
+// repeat for every product item in the cart
+orderedItem.push({
+    Product: {
+        productID: '{{product_id}}',  // internal product ID (not more than 100 characters, the same as in your product feed)
+        category: '1',  // tariff code (defined during integration)
+        price: '{{price}}',  // product price
+        priceCurrency: 'RUB',  // currency code in the ISO-4217 alfa-3 format
+    },
+    orderQuantity: '{{quantity}}',  // product quantity
+    additionalType: 'sale'  // always sale
+});
+ADMITAD.Invoice.referencesOrder = ADMITAD.Invoice.referencesOrder || [];
+// adding items to the order
+ADMITAD.Invoice.referencesOrder.push({
+    orderNumber: '{{order number}}',  // internal order ID (not more than 100 characters)
+    orderedItem: orderedItem
+});
+// Important! If order data is loaded via AJAX, uncomment this string.
+// ADMITAD.Tracking.processPositions();
+</script>
 </body>
 </html>
